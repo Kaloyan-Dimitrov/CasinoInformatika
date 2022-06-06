@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Github e tashal" << endl; 
+    cout << "Github e malko tashal" << endl; 
     cout << "Hello World!\n";
 }
 
