@@ -1,0 +1,2 @@
+0 KaloyanMDimitrov password Kaloyan Dimitrov 0549036845 03.09.2000 150 100 3 0 -30 -20 
+1 admin password admin admin 03020202020 02.02.2000\ 200 200 0 
