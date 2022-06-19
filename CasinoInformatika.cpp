@@ -35,8 +35,7 @@ int casinosCount = 0;
 int currentCasinoIndex = -1;
 
 User users[100];
-int currentUserIndex;
-User currentUser;
+int currentUserIndex = -1;
 
 string availableGames[] = { "Roulette", "Dice" };
 int numGames = 2;
@@ -268,6 +267,9 @@ int userLogin() {
 void printUser(User u) {
     cout << "First name: ";
     cout << u.fname << endl;
+    /// DOPULNI DA IZVEJDA VS DETAILI
+
+
 
     if (u.admin || u.gamesPlayed == 0) return;
     cout << "Average loss: ";
@@ -277,7 +279,6 @@ void printUser(User u) {
     }
     avl /= u.gamesPlayed;
     cout << avl << endl;
-    /// DOPULNI DA IZVEJDA VS DETAILI
 }
 
 // games
@@ -329,7 +330,7 @@ void roulette(User *player)
             return;
         }
     }
-    *curBal -= bet;
+    *curBal = *curBal - bet;
     cout << "You lost " << bet << " :(. Try again, surely you will have better luck!" << endl;
 }
 void dice(User *player)
@@ -382,9 +383,13 @@ int main()
     }
     else {
         readUsers();
+
+
         string options[] = { "Login", "Register" };
         int registr = chooser("Do you want to login or to register?", options, 2);
         if (registr) currentUserIndex = createUser();
+
+
         else currentUserIndex = userLogin();
         if (currentUserIndex == -1) return 0;
     }
@@ -500,6 +505,8 @@ int main()
                 break;
             }
             case 2: { // input money
+                int money;
+                users[currentUserIndex].currentBalance += money;
                 break;
             }
             case 3: { // withdraw money
