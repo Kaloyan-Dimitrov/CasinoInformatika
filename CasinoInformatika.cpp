@@ -504,12 +504,18 @@ int main()
                 printUser(users[currentUserIndex]);
                 break;
             }
-            case 2: { // input money
-                int money;
+            case 2: { // deposit money
+                int money = 0;
+                cout << "Input how much money you would like to deposit: ";
+                cin >> money;
                 users[currentUserIndex].currentBalance += money;
                 break;
             }
             case 3: { // withdraw money
+                int money = 0;
+                cout << "Input how much money you would like to withdraw: ";
+                cin >> money;
+                users[currentUserIndex].currentBalance -= money;
                 break;
             }
         }
