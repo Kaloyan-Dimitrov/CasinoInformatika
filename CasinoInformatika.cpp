@@ -265,14 +265,33 @@ int userLogin() {
     return userIndex;
 }
 void printUser(User u) {
+    cout << "Username: ";
+    cout << u.username << endl;
+    cout << "Password: ";
+    cout << u.password << endl;
     cout << "First name: ";
     cout << u.fname << endl;
     /// DOPULNI DA IZVEJDA VS DETAILI
-
-
-
+    cout << "Last name: ";
+    cout << u.lname << endl;
+    cout << "EGN: ";
+    cout << u.EGN << endl; 
+    cout << "Birthdate: ";
+    cout << u.birthdate << endl;
+    cout << "Initial Balance: ";
+    cout << u.initialBalance << endl;
+    cout << "Current Balance: ";
+    cout << u.currentBalance << endl;
+    cout << "Games Played: ";
+    cout << u.gamesPlayed << endl; 
+    cout << "Game History: ";
+    for (int i = 0; i < u.gamesPlayed; i++)
+    {
+        cout << u.gameHistory[i] << " ";
+    }
+    cout << endl; 
     if (u.admin || u.gamesPlayed == 0) return;
-    cout << "Average loss: ";
+    cout << "Average win/loss: ";
     float avl = 0;
     for (int i = 0; i < u.gamesPlayed; i++) {
         avl += u.gameHistory[i];
@@ -285,52 +304,57 @@ void printUser(User u) {
 void roulette(User *player)
 {
     int *curBal = &((*player).currentBalance);
+    int* gamesPlayed = &((*player).gamesPlayed);
     int black[18] = { 2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35 };
     int red[18] = { 1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36 };
     int green = 0;
     int bet;
     cout << "Input bet" << endl;
     cin >> bet;
-    string colour;
-    cout << "Input colour (type \"Black\", \"Red\" or \"Green\", otherwise you will lose your bet)" << endl;
-    getline(cin, colour);
+    int colour;
+    string colours[] = { "Black", "Red", "Green" };
+    colour = chooser("Input colour (type \"Black\", \"Red\" or \"Green\", otherwise you will lose your bet)", colours, 3);
     int roll;
     srand(time(NULL));
     roll = rand() % 37;
-    if (colour == "Black")
+    if (colour == 0)
     {
         for (int i = 0; i < 18; i++)
         {
             if (roll == black[i])
             {
-                *curBal += bet;
+                *curBal = *curBal + bet;
+                users[currentUserIndex].gameHistory[*gamesPlayed] = 0 + bet;
                 cout << "Congrats! You won " << bet << endl;
                 return;
             }
         }
     }
-    if (colour == "Red")
+    if (colour == 1)
     {
         for (int i = 0; i < 18; i++)
         {
             if (roll == red[i])
             {
-                *curBal += bet;
+                *curBal = *curBal + bet;
+                users[currentUserIndex].gameHistory[*gamesPlayed] = 0 + bet;
                 cout << "Congrats! You won " << bet << endl;
                 return;
             }
         }
     }
-    if (colour == "Green")
+    if (colour == 2)
     {
         if (roll == green)
         {
             *curBal = *curBal + bet * 10;
+            users[currentUserIndex].gameHistory[*gamesPlayed] = 0 + bet * 10;
             cout << "Congrats! You won " << bet * 10 << endl;
             return;
         }
     }
     *curBal = *curBal - bet;
+    users[currentUserIndex].gameHistory[*gamesPlayed] = 0 - bet;
     cout << "You lost " << bet << " :(. Try again, surely you will have better luck!" << endl;
 }
 void dice(User *player)
@@ -350,14 +374,14 @@ void dice(User *player)
     if (number == roll1 + roll2)
     {
         *curBal = (*curBal) + bet * 10;
-        cout << "Congrats! You won " << bet << endl;
         users[currentUserIndex].gameHistory[*gamesPlayed] = 0 + bet * 10;
+        cout << "Congrats! You won " << bet << endl;
     }
     else
     {
         *curBal = (*curBal) - bet;
-        cout << "You lost " << bet << " :(. Try again, surely you will have better luck!" << endl;
         users[currentUserIndex].gameHistory[*gamesPlayed] = 0 - bet;
+        cout << "You lost " << bet << " :(. Try again, surely you will have better luck!" << endl;
     }
     *gamesPlayed = *gamesPlayed + 1;
 }
